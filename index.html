@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcionamento do GPT 4.0</title>
+    <link rel="icon" href="favico.jpg" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow-x: hidden; /* Impede o scroll horizontal */
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        header {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 3px solid #50e3c2;
+        }
+        nav {
+            margin: 20px 0;
+            position: relative;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+        nav a {
+            color: #50e3c2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffccbc;
+        }
+        .indicator {
+            position: absolute;
+            bottom: -10px;
+            width: 20px; /* Largura da seta */
+            height: 20px; /* Altura da seta */
+            background-color: #50e3c2;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Forma de seta */
+            transition: left 0.3s;
+            transform: translateX(-50%); /* Centraliza a seta */
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .section {
+            display: none;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        .active {
+            display: block;
+        }
+        h2 {
+            color: #50e3c2;
+            margin-bottom: 10px;
+        }
+        p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <script>
+            for (let i = 0; i < 100; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                const size = Math.random() * 5 + 2; // Tamanho aleatório entre 2 e 7 pixels
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                snowflake.style.left = `${Math.random() * 100}vw`; // Posição horizontal aleatória
+                snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`; // Duração aleatória entre 2s e 5s
+                snowflake.style.opacity = Math.random(); // Opacidade aleatória
+                document.querySelector('.background').appendChild(snowflake);
+            }
+        </script>
+    </div>
+    
+    <header>
+        <h1>Apresentação GPT 4.0</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('inicio'); updateIndicator(0)">Início</a></li>
+                <li><a href="#" onclick="showSection('sobre'); updateIndicator(1)">Sobre o ChatGPT</a></li>
+                <li><a href="#" onclick="showSection('treinamento'); updateIndicator(2)">Como Foi Treinado</a></li>
+                <li><a href="#" onclick="showSection('imagens'); updateIndicator(3)">Criação de Imagens</a></li>
+                <li><a href="#" onclick="showSection('perguntas'); updateIndicator(4)">Respostas a Perguntas</a></li>
+                <li><a href="#" onclick="showSection('calculos'); updateIndicator(5)">Resolução de Cálculos</a></li>
+                <li><a href="#" onclick="showSection('jogos'); updateIndicator(6)">Criação de Jogos</a></li>
+                <li><a href="#" onclick="showSection('scripts'); updateIndicator(7)">Criação de Scripts de Jogos</a></li>
+                <li><a href="#" onclick="showSection('contato'); updateIndicator(8)">Contato</a></li>
+            </ul>
+            <div class="indicator" id="indicator"></div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div id="inicio" class="section active">
+            <h2>Bem-vindo!</h2>
+            <p>Explore o incrível mundo da Inteligência Artificial, focando nas aplicações práticas do ChatGPT e outras tecnologias inovadoras.</p>
+        </div>
+
+        <div id="sobre" class="section">
+            <h2>Sobre o ChatGPT</h2>
+            <p>O ChatGPT é um modelo de linguagem avançado desenvolvido pela OpenAI, capaz de compreender e gerar texto de forma coerente e relevante. Ele é utilizado em diversas aplicações, desde atendimento ao cliente até geração de conteúdo criativo.</p>
+            <p>Foi lançado pela primeira vez em novembro de 2022, após um processo de treinamento intensivo em grandes volumes de texto.</p>
+        </div>
+
+        <div id="treinamento" class="section">
+            <h2>Como Foi Treinado</h2>
+            <p>O ChatGPT foi treinado utilizando uma técnica chamada aprendizado supervisionado, onde o modelo aprendeu a partir de exemplos de texto disponíveis publicamente. Esse treinamento envolve a análise de padrões e contextos em grandes quantidades de dados textuais.</p>
+            <p>O processo de treinamento é complexo e requer recursos computacionais significativos, envolvendo a colaboração de especialistas em IA e engenheiros de software para garantir que o modelo seja eficiente e eficaz.</p>
+        </div>
+
+        <div id="imagens" class="section">
+            <h2>Criação de Imagens</h2>
+            <p>A IA pode gerar imagens a partir de descrições textuais, permitindo que usuários transformem suas ideias em visuais impressionantes. O modelo utiliza redes neurais profundas para interpretar a descrição e criar uma imagem correspondente.</p>
+            <img src="imagem.jpg" alt="Exemplo de Imagem Gerada">
+            <p>Essa tecnologia tem aplicações em arte, design gráfico e até em jogos, onde visuais personalizados são necessários.</p>
+        </div>
+
+        <div id="perguntas" class="section">
+            <h2>Respostas a Perguntas</h2>
+            <p>O ChatGPT responde perguntas utilizando um vasto conhecimento acumulado durante seu treinamento. Ele analisa a consulta e fornece respostas contextualizadas, levando em conta a intenção do usuário.</p>
+            <p>Esse sistema é capaz de lidar com uma ampla gama de tópicos, tornando-se uma ferramenta valiosa para pesquisa e aprendizado.</p>
+        </div>
+
+        <div id="calculos" class="section">
+            <h2>Resolução de Cálculos</h2>
+            <p>O ChatGPT consegue resolver cálculos matemáticos simples e complexos através de algoritmos que interpretam a pergunta e aplicam regras matemáticas apropriadas.</p>
+            <p>Ele pode ajudar com aritmética básica, álgebra, cálculo e até questões mais avançadas, dependendo da formulação da pergunta.</p>
+        </div>
+
+        <div id="jogos" class="section">
+            <h2>Criação de Jogos</h2>
+            <p>A Inteligência Artificial pode ajudar a criar jogos em 2D e 3D, gerando narrativas, personagens e ambientes que se adaptam ao estilo do jogador.</p>
+            <p>Ela pode sugerir mecânicas de jogo, diálogos e até mesmo desafios dentro do jogo, proporcionando uma experiência dinâmica e envolvente.</p>
+        </div>
+
+        <div id="scripts" class="section">
+            <h2>Criação de Scripts de Jogos</h2>
+            <p>O ChatGPT tem conhecimento em diversas linguagens de programação e pode ajudar a criar scripts para jogos em diversas plataformas, incluindo Unity e Unreal Engine.</p>
+        </div>
+
+        <div id="contato" class="section">
+            <h2>Contato</h2>
+            <p>Para mais informações, você pode entrar no site https://openai.com.</p>
+        </div>
+    </div>
+
+    <script>
+        function showSection(id) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function updateIndicator(index) {
+            const indicator = document.getElementById('indicator');
+            const links = document.querySelectorAll('nav ul li a');
+            const link = links[index];
+            const linkRect = link.getBoundingClientRect();
+            indicator.style.left = `${linkRect.left + linkRect.width / 2}px`; // Centraliza a seta em relação ao link
+        }
+
+        // Inicializa a posição da seta no primeiro item
+        window.onload = () => updateIndicator(0);
+    </script>
+</body>
+</html>
